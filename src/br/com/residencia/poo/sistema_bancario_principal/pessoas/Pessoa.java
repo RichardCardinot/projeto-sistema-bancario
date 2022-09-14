@@ -4,18 +4,17 @@ public abstract class Pessoa {
 
 	private String senha;
 	private String cpf;
-	private char tipoPessoa;
 
 	public Pessoa() {
 		super();
 
 	}
 
-	public Pessoa(String senha, String cpf, char tipoPessoa) {
+	public Pessoa(String senha, String cpf) {
 		super();
 		this.senha = senha;
 		this.cpf = cpf;
-		this.tipoPessoa = tipoPessoa;
+
 	}
 
 	public String getSenha() {
@@ -24,10 +23,6 @@ public abstract class Pessoa {
 
 	public String getCpf() {
 		return cpf;
-	}
-
-	public char getTipoPessoa() {
-		return tipoPessoa;
 	}
 
 }

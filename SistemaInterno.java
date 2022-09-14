@@ -1,8 +1,10 @@
-package br.com.residencia.poo.projeto_sistema_bancario.principal;
+package br.com.residencia.poo.sistema_bancario.principal;
 
 public class SistemaInterno {
 
 	public static void main(String[] args) {
+	
+		
 	}
 
 }
