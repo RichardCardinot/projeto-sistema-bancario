@@ -1,10 +1,15 @@
 package br.com.residencia.poo.sistema_bancario_principal.contas;
 
+import java.util.ArrayList;
+import br.com.residencia.poo.projeto_sistema_bancario.movimentacao.Movimentacao;
+
 public abstract class Conta {
 	private String cpfTitular;
 	private double saldoTitular;
 	private int agenciaTitular;
 
+	private ArrayList<Movimentacao> movimentacoes = new ArrayList<Movimentacao>();
+	
 	public Conta(String cpfTitular, double saldoTitular, int agenciaTitular) {
 		super();
 		this.cpfTitular = cpfTitular;
@@ -30,6 +35,14 @@ public abstract class Conta {
 
 	public void setSaldoTitular(double saldoTitular) {
 		this.saldoTitular = saldoTitular;
+	}
+	
+	public ArrayList<Movimentacao> getMovimentacoes() {
+		return movimentacoes;
+	}
+
+	public void setMovimentacoes(Movimentacao movimentacao) {
+		this.movimentacoes.add(movimentacao);
 	}
 
 	public abstract boolean saque(double valor);
