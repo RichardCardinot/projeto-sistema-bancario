@@ -7,14 +7,20 @@ public abstract class Conta {
 	private String cpfTitular;
 	private double saldoTitular;
 	private int agenciaTitular;
+	private String tipoConta;
+	private int numeroConta;
 
 	private ArrayList<Movimentacao> movimentacoes = new ArrayList<Movimentacao>();
 	
-	public Conta(String cpfTitular, double saldoTitular, int agenciaTitular) {
+	public Conta() {}
+	
+	public Conta(String cpfTitular, double saldoTitular, int agenciaTitular, String tipoConta, int numeroConta) {
 		super();
 		this.cpfTitular = cpfTitular;
 		this.saldoTitular = saldoTitular;
 		this.agenciaTitular = agenciaTitular;
+		this.tipoConta = tipoConta;
+		this.numeroConta = numeroConta;
 	}
 
 	public String getCpfTitular() {
@@ -37,6 +43,22 @@ public abstract class Conta {
 		this.saldoTitular = saldoTitular;
 	}
 	
+	public String getTipoConta() {
+		return tipoConta;
+	}
+
+	public void setTipoConta(String tipoConta) {
+		this.tipoConta = tipoConta;
+	}
+
+	public int getNumeroConta() {
+		return numeroConta;
+	}
+
+	public void setNumeroConta(int numeroConta) {
+		this.numeroConta = numeroConta;
+	}
+
 	public ArrayList<Movimentacao> getMovimentacoes() {
 		return movimentacoes;
 	}
@@ -45,10 +67,10 @@ public abstract class Conta {
 		this.movimentacoes.add(movimentacao);
 	}
 
-	public abstract boolean saque(double valor);
+	public abstract boolean sacar(double valor);
 
-	public abstract boolean deposito(double valor);
+	public abstract boolean depositar(double valor);
 
-	public abstract boolean transferencia(double valor, Conta conta);
+	public abstract boolean transferir(double valor, Conta conta);
 
 }
