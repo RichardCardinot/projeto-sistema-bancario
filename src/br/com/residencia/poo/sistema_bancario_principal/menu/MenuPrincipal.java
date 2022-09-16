@@ -1,8 +1,10 @@
 package br.com.residencia.poo.sistema_bancario_principal.menu;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
+import br.com.residencia.poo.projeto_sistema_bancario.date.FormataData;
 import br.com.residencia.poo.sistema_bancario_principal.contas.Conta;
 import br.com.residencia.poo.sistema_bancario_principal.pessoas.Pessoa;
 
@@ -12,10 +14,10 @@ public class MenuPrincipal {
 	public static void selecionarMenu(Pessoa pessoa, Conta conta, ArrayList<Conta> contas) {
 
 		if (pessoa.getTipoPessoa().equals("CLIENTE")) {
-			apresentar(pessoa);
+			apresentar(pessoa, conta);
 
 			if (opcoesCliente(pessoa, conta, contas) == 1) { // Chama o menu "movimentações da conta"
-				System.out.println("\nInforme a operação desejada: ");
+				apresentar(pessoa, conta);
 				if (conta.getTipoConta().equals("CORRENTE")) {
 
 					switch (opcoesMovimentacaoContaCorrente(pessoa, conta, contas)) {
@@ -73,7 +75,7 @@ public class MenuPrincipal {
 			} else {
 
 				try {
-					apresentar(pessoa);
+					apresentar(pessoa, conta);
 					System.out.println("Escolha a opção desejada:\n");
 					opcoesGerente(pessoa, conta, contas);
 
@@ -86,26 +88,36 @@ public class MenuPrincipal {
 		}
 	}
 
-	public static void apresentar(Pessoa pessoa) {
+	public static void apresentar(Pessoa pessoa, Conta conta) {
 		String nome = "", espaco = "";
 		int i = 35 - (pessoa.getNome().length());
 		i /= 2;
 		for (int t = 0; t <= i; t++) {
 			espaco += " ";
 		}
-
 		nome = espaco + pessoa.getNome() + espaco;
+		
+		String espacoDois = "";
+		int d = 35 - (String.valueOf(conta.getSaldoTitular()).length() + 27);
+		for (int t = 0; t <= d; t++) {
+			espacoDois += " ";
+		}
+
+		
 		System.out.println("\n-----------------------------------");
 		System.out.println("--- B A N C O  S E R R A T E C ---");
 		System.out.println("-----------------------------------");
-		System.out.println(nome);
+		System.out.println("Saldo: R$ " + conta.getSaldoTitular() + espacoDois + FormataData.converterDateParaDataEHora(new Date()));
+		System.out.println("\n" + nome);
+
 		System.out.println("-----------------------------------");
+		System.out.println("Escolha a opção desejada:");
+		
 	}
 
 	public static int opcoesCliente(Pessoa pessoa, Conta conta, ArrayList<Conta> contas) { // Se for cliente
 
 		try {
-			System.out.println("Escolha a opção desejada:\n");
 			System.out.println("1 - Movimentações na Conta");
 			System.out.println("2 - Relatórios");
 			return sc.nextInt();
@@ -120,7 +132,6 @@ public class MenuPrincipal {
 
 	public static int opcoesGerente(Pessoa pessoa, Conta conta, ArrayList<Conta> contas) { // Se for funcionário
 		try {
-			System.out.println("Escolha a opção desejada:\n");
 			System.out.println("1 - Relatórios");
 			return sc.nextInt();
 
@@ -134,7 +145,6 @@ public class MenuPrincipal {
 	public static int opcoesMovimentacaoContaCorrente(Pessoa pessoa, Conta conta, ArrayList<Conta> contas) { // Se for
 																												// funcionário
 		try {
-			System.out.println("Escolha a opção desejada:\n");
 			System.out.println("1 - Saque");
 			System.out.println("2 - Deposito");
 			System.out.println("3 - Transferencia");

@@ -1,4 +1,4 @@
-package br.com.poo.residencia.projeto_sistema_bancario.date;
+package br.com.residencia.poo.projeto_sistema_bancario.date;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
