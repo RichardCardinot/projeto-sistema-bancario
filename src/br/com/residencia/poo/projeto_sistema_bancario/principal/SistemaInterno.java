@@ -1,6 +1,6 @@
 package br.com.residencia.poo.projeto_sistema_bancario.principal;
 
-import br.com.residencia.poo.sistema_bancario_principal.menu.Login;
+import br.com.residencia.poo.projeto_sistema_bancario.menu.Login;
 
 public class SistemaInterno {
 
