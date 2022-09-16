@@ -90,36 +90,39 @@ public class MenuPrincipal {
 
 	public static void apresentar(Pessoa pessoa, Conta conta) {
 		String nome = "", espaco = "";
-		int i = 35 - (pessoa.getNome().length());
+		int i = 24 - (pessoa.getNome().length());
 		i /= 2;
 		for (int t = 0; t <= i; t++) {
 			espaco += " ";
 		}
-		nome = espaco + pessoa.getNome() + espaco;
+		nome = espaco + "Bem-vindo, " + pessoa.getNome() + "!" + espaco;
 		
 		String espacoDois = "";
-		int d = 35 - (String.valueOf(conta.getSaldoTitular()).length() + 27);
+		int d = 36 - (String.valueOf(conta.getSaldoTitular()).length() + 27);
 		for (int t = 0; t <= d; t++) {
 			espacoDois += " ";
 		}
 
 		
-		System.out.println("\n-----------------------------------");
-		System.out.println("--- B A N C O  S E R R A T E C ---");
-		System.out.println("-----------------------------------");
-		System.out.println("Saldo: R$ " + conta.getSaldoTitular() + espacoDois + FormataData.converterDateParaDataEHora(new Date()));
-		System.out.println("\n" + nome);
-
-		System.out.println("-----------------------------------");
-		System.out.println("Escolha a opção desejada:");
+		System.out.println("\n----------------------------------------");
+		System.out.println("---    B A N C O  S E R R A T E C    ---");
+		System.out.println("----------------------------------------");
+		System.out.println("- Saldo: R$ " + conta.getSaldoTitular() + espacoDois + FormataData.converterDateParaDataEHora(new Date()) + " -");
+		System.out.println("----------------------------------------");
+		System.out.println("-                                      -");
+		System.out.println("-" + nome + "-");
+		System.out.println("-                                      -");
+		System.out.println("- v1.0                                 -");
+		System.out.println("----------------------------------------");
+		System.out.println("\nEscolha a opção desejada:");
 		
 	}
 
 	public static int opcoesCliente(Pessoa pessoa, Conta conta, ArrayList<Conta> contas) { // Se for cliente
 
 		try {
-			System.out.println("1 - Movimentações na Conta");
-			System.out.println("2 - Relatórios");
+			System.out.println(" (1) - Movimentações na Conta");
+			System.out.println(" (2) - Relatórios");
 			return sc.nextInt();
 
 		} catch (Exception e) {

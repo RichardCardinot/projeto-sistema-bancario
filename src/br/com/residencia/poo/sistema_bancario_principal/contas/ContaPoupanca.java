@@ -1,7 +1,5 @@
 package br.com.residencia.poo.sistema_bancario_principal.contas;
 
-import java.util.Date;
-
 import br.com.residencia.poo.projeto_sistema_bancario.movimentacao.Movimentacao;
 
 public class ContaPoupanca extends Conta {
