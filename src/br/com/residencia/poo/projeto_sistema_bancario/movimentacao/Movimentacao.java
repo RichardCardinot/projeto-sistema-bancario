@@ -2,7 +2,7 @@ package br.com.residencia.poo.projeto_sistema_bancario.movimentacao;
 
 import java.util.Date;
 
-import br.com.poo.residencia.projeto_sistema_bancario.date.FormataData;
+import br.com.residencia.poo.residencia.projeto_sistema_bancario.date.FormataData;
 
 public class Movimentacao {
 
