@@ -24,7 +24,7 @@ public class MenuPrincipal {
 							System.out.println("\nSaldo atual R$ " + conta.getSaldoTitular());
 							System.out.println("\nInforme o valor a ser sacado: ");
 							conta.sacar(sc.nextDouble());
-							System.out.println("\nNovo saldo R$ \n" + conta.getSaldoTitular());
+							//System.out.println("\nNovo saldo R$ \n" + conta.getSaldoTitular());
 							selecionarMenu(pessoa, conta, contas);
 							
 						} catch (Exception e) {
@@ -51,6 +51,7 @@ public class MenuPrincipal {
 							System.out.println("\nInforme o valor a ser transferido: ");
 							valor = sc.nextDouble();
 							System.out.println("\nInforme o CPF do usuário de destino: ");
+							//conta = LeitorDeDados.buscaContaPorCpf(sc.next());
 							conta = LeitorDeDados.buscaContaPorCpf(sc.next());
 							if (conta != null) {
 								conta.transferir(valor, conta);

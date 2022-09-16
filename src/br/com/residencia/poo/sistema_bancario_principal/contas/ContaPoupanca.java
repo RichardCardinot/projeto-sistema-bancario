@@ -28,14 +28,14 @@ public class ContaPoupanca extends Conta {
 
 	@Override
 	public boolean sacar(double valor) {
-		if (getSaldoTitular() >= valor) {
+		if (getSaldoTitular() > valor && valor > 0) {
 			setSaldoTitular(getSaldoTitular() - valor);
 			setMovimentacoes(new Movimentacao("Saque", valor));
 			System.out.println("Seu saque foi realizado com sucesso!");
-			System.out.println("Você sacou R$" + valor + ". Seu saldo agora é R$" + this.getSaldoTitular());
+			System.out.printf("Você sacou R$%.2f. Seu saldo agora é R$%.2f.", valor, this.getSaldoTitular());
 			return true;
 		} else {
-			System.out.println("Valor insuficiente!" + "Seu saldo é R$" + this.getSaldoTitular());
+			System.out.println("Valor inválido!");
 			return false;
 		}
 	}
@@ -46,7 +46,7 @@ public class ContaPoupanca extends Conta {
 			setSaldoTitular(getSaldoTitular() + valor);
 			setMovimentacoes(new Movimentacao("Depósito", valor));
 			System.out.println("Seu depósito foi realizado com sucesso!");
-			System.out.println("Você depositou R$" + valor + ". Seu saldo agora é R$" + this.getSaldoTitular());
+			System.out.printf("Você depositou R$%.2f. Seu saldo agora é R$%.2f", valor, this.getSaldoTitular());
 			return true;
 		} else {
 			System.out.println("Valor inválido!");
@@ -62,8 +62,9 @@ public class ContaPoupanca extends Conta {
 			setSaldoTitular(saldo -= valor);
 			conta.depositar(valor);
 			System.out.println("Sua transferência foi realizada com sucesso!");
-			System.out.println("Você transferiu R$" + valor + " para a conta: " + conta + ". Seu saldo atual agora é R$"
-					+ this.getSaldoTitular());
+			System.out.printf("Você transferiu R$%.2f", valor);
+			System.out.println("Conta favorecida: "+ conta);
+			System.out.printf("Seu saldo atual agora é R$%.2f", this.getSaldoTitular());
 			return true;
 		} else {
 			System.out.println("Saldo insuficiente!");
