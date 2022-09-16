@@ -10,7 +10,7 @@ public class ValidaUsuario {
 	static ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
 
 	public static Pessoa validarUsuario(String usuario, String senha) {
-		
+
 		try {
 			pessoas = LeitorDeDados.leitorUsuarios();
 		} catch (FileNotFoundException e) {
@@ -25,7 +25,29 @@ public class ValidaUsuario {
 				return pessoaLocalizada;
 			}
 		}
-		
+
+		return null;
+
+	}
+
+	public static Pessoa encontrarUsuarioPorCpf(String usuario) {
+
+		try {
+			pessoas = LeitorDeDados.leitorUsuarios();
+
+		} catch (FileNotFoundException e) {
+			System.out.println("O sistema não pode encontrar o arquivo especificado no caminho.");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		for (int i = 0; i < pessoas.size(); i++) {
+			if (pessoas.get(i).getCpf().equals(usuario)) {
+				Pessoa pessoaLocalizada = pessoas.get(i);
+				return pessoaLocalizada;
+			}
+		}
+
 		return null;
 
 	}

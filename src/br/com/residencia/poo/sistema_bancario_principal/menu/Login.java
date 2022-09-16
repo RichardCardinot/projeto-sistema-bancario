@@ -20,8 +20,15 @@ public class Login {
 		System.out.println("Informe a senha..: ");
 		senha = sc.nextLine();
 
+		validarLogin(usuario, senha);
+
+		sc.close();
+
+	}
+
+	public static void validarLogin(String usuario, String senha) {
 		if (ValidaUsuario.validarUsuario(usuario, senha) == null) {
-			System.out.println("Usuário ou senha inválido!");
+			System.out.println("\nUsuário ou senha inválido!\n");
 			logar();
 
 		} else {
@@ -29,21 +36,19 @@ public class Login {
 			try {
 				Pessoa pessoa = ValidaUsuario.validarUsuario(usuario, senha);
 				ArrayList<Conta> contas = LeitorDeDados.leitorContas();
-				
-				System.out.println("Usuário logado com sucesso!");
-				
+
+				System.out.println("\nUsuário logado com sucesso!\n");
+
 				for (int i = 0; i < contas.size(); i++) {
 					if (contas.get(i).getCpfTitular().equals(pessoa.getCpf())) {
-						MenuPrincipal.selecionarMenu(pessoa, contas.get(i));
+						MenuPrincipal.selecionarMenu(pessoa, contas.get(i), contas);
 					}
 				}
 
 			} catch (Exception e) {
-				// TODO: handle exception
+				System.out.println("\nDados inválidos!\n");
 			}
 		}
-
-		sc.close();
 
 	}
 

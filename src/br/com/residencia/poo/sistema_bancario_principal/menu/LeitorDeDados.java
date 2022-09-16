@@ -9,8 +9,10 @@ import br.com.residencia.poo.sistema_bancario_principal.contas.Conta;
 import br.com.residencia.poo.sistema_bancario_principal.contas.ContaCorrente;
 import br.com.residencia.poo.sistema_bancario_principal.contas.ContaPoupanca;
 import br.com.residencia.poo.sistema_bancario_principal.pessoas.Cliente;
-import br.com.residencia.poo.sistema_bancario_principal.pessoas.Funcionario;
+import br.com.residencia.poo.sistema_bancario_principal.pessoas.Diretor;
+import br.com.residencia.poo.sistema_bancario_principal.pessoas.Gerente;
 import br.com.residencia.poo.sistema_bancario_principal.pessoas.Pessoa;
+import br.com.residencia.poo.sistema_bancario_principal.pessoas.Presidente;
 
 public class LeitorDeDados {
 
@@ -26,22 +28,42 @@ public class LeitorDeDados {
 				if (linha != null) {
 					String[] atributos = linha.split(";");
 
-					// se o tipoPessoa == 1, então é cliente
-					if (atributos[0].equals("1")) {
+					switch (atributos[0]) {
+					case "CLIENTE": {
+						//String tipoPessoa, String cpf, String senha, String nome
 						Pessoa cliente = new Cliente(atributos[0], atributos[1], atributos[2], atributos[3]);
 						pessoas.add(cliente);
-					} else { // senão é funcionário
-						Pessoa funcionario = new Funcionario(atributos[0], atributos[1], atributos[2], atributos[3]);
-						pessoas.add(funcionario);
+						break;
+					}
+					case "GERENTE": {
+						//String tipoPessoa, String cpf, String senha, String nome, int agenciaGerenciad
+						Pessoa gerente = new Gerente(atributos[0], atributos[1], atributos[2], atributos[3],
+								Integer.valueOf(atributos[4]).intValue());
+						pessoas.add(gerente);
+						break;
+					}
+						//String tipoPessoa, String cpf, String senha, String nome
+					case "DIRETOR": {
+						Pessoa diretor = new Diretor(atributos[0], atributos[1], atributos[2], atributos[3]);
+						pessoas.add(diretor);
+						break;
+					}
+					case "PRESIDENTE": {
+						//String tipoPessoa, String cpf, String senha, String nome
+						Pessoa presidente = new Presidente(atributos[0], atributos[1], atributos[2], atributos[3]);
+						pessoas.add(presidente);
+						break;
 					}
 
+					}
 				} else {
 					break;
 				}
+
 			}
 
 		} catch (Exception e) {
-			System.out.println("Quantidade de parâmetros inválidos no arquivo.");
+			//System.out.println("Quantidade de parâmetros inválidos no arquivo.");
 		}
 
 		buffRead.close();
@@ -63,11 +85,13 @@ public class LeitorDeDados {
 
 					if (atributos[3].equals("CORRENTE")) {
 						Conta conta = new ContaCorrente(atributos[0], Double.valueOf(atributos[1]).doubleValue(),
-								Integer.valueOf(atributos[2]).intValue(),atributos[3], Integer.valueOf(atributos[4]).intValue());
+								Integer.valueOf(atributos[2]).intValue(), atributos[3],
+								Integer.valueOf(atributos[4]).intValue());
 						contas.add(conta);
 					} else if (atributos[3].equals("POUPANCA")) {
 						Conta conta = new ContaPoupanca(atributos[0], Double.valueOf(atributos[1]).doubleValue(),
-								Integer.valueOf(atributos[2]).intValue(),atributos[3], Integer.valueOf(atributos[4]).intValue());
+								Integer.valueOf(atributos[2]).intValue(), atributos[3],
+								Integer.valueOf(atributos[4]).intValue());
 						contas.add(conta);
 					}
 
@@ -83,5 +107,21 @@ public class LeitorDeDados {
 		buffRead.close();
 		return contas;
 
+	}
+	
+	public static Conta buscaContaPorCpf(String cpf) {
+		
+		try {
+			for(int i = 0; i < leitorContas().size(); i++) {
+				if(leitorContas().get(i).getCpfTitular().equals(cpf)) {
+					return leitorContas().get(i);
+				};	
+			}
+		} catch (Exception e) {
+			System.out.println("Formato inválido!");
+		}
+		return null;
+
+		
 	}
 }
