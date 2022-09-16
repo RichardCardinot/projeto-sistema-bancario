@@ -2,7 +2,7 @@ package br.com.residencia.poo.projeto_sistema_bancario.movimentacao;
 
 import java.util.Date;
 
-import br.com.residencia.poo.residencia.projeto_sistema_bancario.date.FormataData;
+import br.com.residencia.poo.projeto_sistema_bancario.date.FormataData;
 
 public class Movimentacao {
 
@@ -36,6 +36,6 @@ public class Movimentacao {
 	@Override
 	public String toString() {
 		String dataFormatada = FormataData.converterDateParaDataEHora(this.getData());
-		return this.getDescricao() + "\n" + dataFormatada + " - R$" + this.valor;
+		return this.getDescricao() + " " + dataFormatada + " - R$" + this.valor;
 	}
 }
