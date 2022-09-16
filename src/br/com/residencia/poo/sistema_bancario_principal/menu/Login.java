@@ -1,8 +1,10 @@
 package br.com.residencia.poo.sistema_bancario_principal.menu;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
+import br.com.residencia.poo.projeto_sistema_bancario.date.FormataData;
 import br.com.residencia.poo.sistema_bancario_principal.contas.Conta;
 import br.com.residencia.poo.sistema_bancario_principal.pessoas.Pessoa;
 
@@ -11,9 +13,9 @@ public class Login {
 	public static void logar() {
 		String usuario;
 		String senha;
-
 		Scanner sc = new Scanner(System.in);
-
+		
+		apresentar();
 		System.out.println("Informe o usuário: ");
 		usuario = sc.nextLine();
 
@@ -50,6 +52,25 @@ public class Login {
 			}
 		}
 
+	}
+	
+	public static void apresentar() {		
+		String espacoDois = "";
+		for (int t = 0; t <= 20; t++) {
+			espacoDois += " ";
+		}
+
+		
+		System.out.println("\n----------------------------------------");
+		System.out.println("---    B A N C O  S E R R A T E C    ---");
+		System.out.println("----------------------------------------");
+		System.out.println("-" + espacoDois + FormataData.converterDateParaDataEHora(new Date()) + " -");
+		System.out.println("----------------------------------------");
+		System.out.println("-                                      -");
+		System.out.println("-              Menu Login              -");
+		System.out.println("-                                      -");
+		System.out.println("- v1.0                                 -");
+		System.out.println("----------------------------------------\n");
 	}
 
 }
