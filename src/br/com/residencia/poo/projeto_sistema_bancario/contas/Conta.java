@@ -1,16 +1,17 @@
 package br.com.residencia.poo.projeto_sistema_bancario.contas;
 
 import java.util.ArrayList;
+
 import br.com.residencia.poo.projeto_sistema_bancario.movimentacao.Movimentacao;
 
 public abstract class Conta {
-	private String cpfTitular;
-	private double saldoTitular;
-	private int agenciaTitular;
-	private String tipoConta;
-	private int numeroConta;
+	protected String cpfTitular;
+	protected double saldoTitular;
+	protected int agenciaTitular;
+	protected String tipoConta;
+	protected int numeroConta;
 
-	private ArrayList<Movimentacao> movimentacoes = new ArrayList<Movimentacao>();
+	protected ArrayList<Movimentacao> movimentacoes = new ArrayList<Movimentacao>();
 	
 	public Conta() {}
 	
@@ -63,13 +64,9 @@ public abstract class Conta {
 		return movimentacoes;
 	}
 
-	public void setMovimentacoes(Movimentacao movimentacao) {
-		this.movimentacoes.add(movimentacao);
-	}
-
 	public abstract boolean sacar(double valor);
 
-	public abstract boolean depositar(double valor);
+	public abstract boolean depositar(double valor, boolean operacao);
 
 	public abstract boolean transferir(double valor, Conta conta);
 

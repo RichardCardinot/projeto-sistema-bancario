@@ -9,12 +9,14 @@ public class Movimentacao {
 	private String descricao;
 	private Date data;
 	private double valor;
+	private double taxa;
 
-	public Movimentacao(String descricao, double valor) {
+	public Movimentacao(String descricao, double valor, double taxa) {
 		super();
 		this.descricao = descricao;
 		this.data = new Date();
 		this.valor = valor;
+		this.taxa = taxa;
 	}
 
 	public String getDescricao() {
@@ -33,9 +35,13 @@ public class Movimentacao {
 		return valor;
 	}
 
+	public double getTaxa() {
+		return taxa;
+	}
+
 	@Override
 	public String toString() {
 		String dataFormatada = FormataData.converterDateParaDataEHora(this.getData());
-		return this.getDescricao() + " " + dataFormatada + " - R$" + this.valor;
+		return this.getDescricao() + " " + dataFormatada + " - R$ " + this.valor;
 	}
 }

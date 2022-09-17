@@ -2,11 +2,21 @@ package br.com.residencia.poo.projeto_sistema_bancario.pessoas;
 
 public abstract class Pessoa {
 
-	private String tipoPessoa;
-	private String cpf;
-	private String senha;
-	private String nome;
+	protected String tipoPessoa;
+	protected String cpf;
+	protected String senha;
+	protected String nome;
+	protected String agenciaGerenciada;
 
+	public Pessoa(String tipoPessoa, String cpf, String senha, String nome, String agenciaGerenciada) {
+		super();
+		this.tipoPessoa = tipoPessoa;
+		this.cpf = cpf;
+		this.senha = senha;
+		this.nome = nome;
+		this.agenciaGerenciada = agenciaGerenciada;
+	}
+	
 	public Pessoa(String tipoPessoa, String cpf, String senha, String nome) {
 		super();
 		this.tipoPessoa = tipoPessoa;
@@ -30,5 +40,11 @@ public abstract class Pessoa {
 	public String getNome() {
 		return nome;
 	}
+
+	public String getAgenciaGerenciada() {
+		return agenciaGerenciada;
+	}
+	
+	
 
 }

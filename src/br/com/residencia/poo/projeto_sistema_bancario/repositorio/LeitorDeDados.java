@@ -30,27 +30,29 @@ public class LeitorDeDados {
 
 					switch (atributos[0]) {
 					case "CLIENTE": {
-						//String tipoPessoa, String cpf, String senha, String nome
+						// String tipoPessoa, String cpf, String senha, String nome
 						Pessoa cliente = new Cliente(atributos[0], atributos[1], atributos[2], atributos[3]);
 						pessoas.add(cliente);
 						break;
 					}
 					case "GERENTE": {
-						//String tipoPessoa, String cpf, String senha, String nome, int agenciaGerenciad
+						// String tipoPessoa, String cpf, String senha, String nome, int
+						// agenciaGerenciad
 						Pessoa gerente = new Gerente(atributos[0], atributos[1], atributos[2], atributos[3],
-								Integer.valueOf(atributos[4]).intValue());
+								atributos[4]);
 						pessoas.add(gerente);
 						break;
 					}
-						//String tipoPessoa, String cpf, String senha, String nome
+					// String tipoPessoa, String cpf, String senha, String nome
 					case "DIRETOR": {
-						Pessoa diretor = new Diretor(atributos[0], atributos[1], atributos[2], atributos[3]);
+						Pessoa diretor = new Diretor(atributos[0], atributos[1], atributos[2], atributos[3],
+								atributos[4]);
 						pessoas.add(diretor);
 						break;
 					}
 					case "PRESIDENTE": {
-						//String tipoPessoa, String cpf, String senha, String nome
-						Pessoa presidente = new Presidente(atributos[0], atributos[1], atributos[2], atributos[3]);
+						// String tipoPessoa, String cpf, String senha, String nome
+						Pessoa presidente = new Presidente(atributos[0], atributos[1], atributos[2], atributos[3], atributos[4]);
 						pessoas.add(presidente);
 						break;
 					}
@@ -63,7 +65,7 @@ public class LeitorDeDados {
 			}
 
 		} catch (Exception e) {
-			//System.out.println("Quantidade de parâmetros inválidos no arquivo.");
+			// System.out.println("Quantidade de parâmetros inválidos no arquivo.");
 		}
 
 		buffRead.close();
@@ -108,20 +110,20 @@ public class LeitorDeDados {
 		return contas;
 
 	}
-	
+
 	public static Conta buscaContaPorCpf(String cpf) {
-		
+
 		try {
-			for(int i = 0; i < leitorContas().size(); i++) {
-				if(leitorContas().get(i).getCpfTitular().equals(cpf)) {
+			for (int i = 0; i < leitorContas().size(); i++) {
+				if (leitorContas().get(i).getCpfTitular().equals(cpf)) {
 					return leitorContas().get(i);
-				};	
+				}
+				;
 			}
 		} catch (Exception e) {
 			System.out.println("Formato inválido!");
 		}
 		return null;
 
-		
 	}
 }

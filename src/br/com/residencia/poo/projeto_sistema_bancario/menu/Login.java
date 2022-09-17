@@ -41,11 +41,15 @@ public class Login {
 				ArrayList<Conta> contas = LeitorDeDados.leitorContas();
 
 				System.out.println("\nUsuário logado com sucesso!\n");
-
-				for (int i = 0; i < contas.size(); i++) {
-					if (contas.get(i).getCpfTitular().equals(pessoa.getCpf())) {
-						MenuPrincipal.selecionarMenu(pessoa, contas.get(i), contas);
+				
+				if(pessoa.getTipoPessoa().equals("CLIENTE")) {
+					for (int i = 0; i < contas.size(); i++) {
+						if (contas.get(i).getCpfTitular().equals(pessoa.getCpf())) {
+							MenuPrincipal.selecionarMenu(pessoa, contas.get(i), contas);
+						}
 					}
+				} else {
+						MenuPrincipal.selecionarMenu(pessoa, contas.get(0), contas);
 				}
 
 			} catch (Exception e) {
