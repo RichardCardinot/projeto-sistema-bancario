@@ -18,7 +18,8 @@ public class ContaPoupanca extends Conta {
 		super(cpfTitular, saldoTitular, agenciaTitular, tipoConta, numeroConta);
 	}
 
-	public void simularRendimento(double valorAplicacao, int quantidadeDias) {
+	public String simularRendimento(double valorAplicacao, int quantidadeDias) {
+		String mensagem = "";
 		if (valorAplicacao > 0 && quantidadeDias > 0) {
 			double valorRendimento = quantidadeDias * RENDIMENTO;
 			double valorRendimentoTotal = valorAplicacao + valorRendimento;
@@ -31,10 +32,15 @@ public class ContaPoupanca extends Conta {
 			} catch (IOException e) {
 				System.out.println("O arquivo de movimentações não pode ser gerado!");
 			}
-			System.out.println("Para o valor de aplicação R$" + valorAplicacao + ", seu\nrendimento será de R$"
-					+ valorRendimento + ", ficando com o\ntotal de R$" + valorRendimentoTotal);
+			
+			mensagem = "Para o valor de aplicação R$" + valorAplicacao + ", seu\nrendimento será de R$"
+					+ valorRendimento + ", ficando com o\ntotal de R$" + valorRendimentoTotal;
+			System.out.println(mensagem);
+			return mensagem;
 		} else {
-			System.out.println("O valor da aplicação ou a quantidade de dias não pode ser zero.");
+			mensagem = "O valor da aplicação ou a quantidade de dias não pode ser zero.";
+			System.out.println(mensagem);
+			return mensagem;
 		}
 	}
 

@@ -184,21 +184,32 @@ public class MenuPrincipal {
 
 					String dataFormatada = FormataData
 							.converterDateParaDataEHora(conta.getMovimentacoes().get(i).getData());
-					System.out.println(" - " + conta.getMovimentacoes().get(i).getDescricao() + " em " + dataFormatada
-							+ " foi taxado em R$ " + formataDecimais.format(conta.getMovimentacoes().get(i).getTaxa())
-							+ ";\n");
+
+					dadosGeradorArquivo += " - " + conta.getMovimentacoes().get(i).getDescricao() + " em "
+							+ dataFormatada + " foi taxado em R$ "
+							+ formataDecimais.format(conta.getMovimentacoes().get(i).getTaxa()) + "\n";
+
 				}
 
 				if (conta.getMovimentacoes().isEmpty()) {
+
 					System.out.println("- Não há dados a serem impressos!");
 				}
-				System.out
-						.println("\nTributações por operação\n- Saque e Depósito: R$ 0.10 e Transferência R$ 0.20.\n");
+
+				dadosGeradorArquivo += "\nTributações por operação\n- Saque e Depósito: R$ 0.10 e Transferência R$ 0.20.\n";
+
+				System.out.println(dadosGeradorArquivo);
 				System.out.println("----------------------------------------\n");
+
+				try {
+					GeradorDeArquivos.escreverArquivoMovimentacao(dadosGeradorArquivo, "Relatório de tributação CC");
+				} catch (IOException e) {
+					System.out.println("Não foi possível gerar o arquivo");
+				}
 
 				menuCliente(pessoa, conta);
 
-			} else if (opcoesRelatoriosConta(pessoa, conta) == 2) { // 2 - Relatório de Rendimento da poupança
+			} else { // 2 - Relatório de Rendimento da poupança
 				double valorAplicao = 0.0;
 				int quantidadeDias = 0;
 
@@ -213,13 +224,16 @@ public class MenuPrincipal {
 
 				ContaPoupanca contaSimulacao = new ContaPoupanca();
 
-				contaSimulacao.simularRendimento(valorAplicao, quantidadeDias);
+				dadosGeradorArquivo = contaSimulacao.simularRendimento(valorAplicao, quantidadeDias);
+				try {
+					GeradorDeArquivos.escreverArquivoMovimentacao(dadosGeradorArquivo, "Simulação de rendimentos");
+				} catch (IOException e) {
+					System.out.println("Não foi possível gerar o arquivo");
+				}
 				System.out.println("----------------------------------------\n");
 
 				menuCliente(pessoa, conta);
-			} else {
-
-			}
+			} 
 		}
 
 	}
@@ -240,12 +254,13 @@ public class MenuPrincipal {
 					}
 				}
 				try {
-					GeradorDeArquivos.escreverArquivoMovimentacao(dadosGeradorArquivo, "Relatório de contas gerenciadas");
+					GeradorDeArquivos.escreverArquivoMovimentacao(dadosGeradorArquivo,
+							"Relatório de contas gerenciadas");
 				} catch (IOException e) {
 					System.out.println("Não foi possível gerar o arquivo");
 				}
 				System.out.println(dadosGeradorArquivo);
-				
+
 				voltar(pessoa, contas);
 			} else {
 				System.out.println("Opção inválida!");
@@ -268,16 +283,17 @@ public class MenuPrincipal {
 					}
 				}
 				try {
-					GeradorDeArquivos.escreverArquivoMovimentacao(dadosGeradorArquivo, "Relatório de contas gerenciadas");
+					GeradorDeArquivos.escreverArquivoMovimentacao(dadosGeradorArquivo,
+							"Relatório de contas gerenciadas");
 				} catch (IOException e) {
 					System.out.println("Não foi possível gerar o arquivo");
 				}
 				System.out.println(dadosGeradorArquivo);
-				
+
 				voltar(pessoa, contas);
 			} else if (opcaoDiretor == 2) {
 				System.out.println("\nRelatório de clientes:");
-				
+
 				for (Conta conta : contas) {
 					dadosGeradorArquivo += " - Conta: " + conta.getNumeroConta() + "\n";
 				}
@@ -287,7 +303,7 @@ public class MenuPrincipal {
 					System.out.println("Não foi possível gerar o arquivo");
 				}
 				System.out.println(dadosGeradorArquivo);
-				
+
 				voltar(pessoa, contas);
 			} else {
 				System.out.println("Opção inválida!");
@@ -312,16 +328,17 @@ public class MenuPrincipal {
 					}
 				}
 				try {
-					GeradorDeArquivos.escreverArquivoMovimentacao(dadosGeradorArquivo, "Relatório de contas gerenciadas");
+					GeradorDeArquivos.escreverArquivoMovimentacao(dadosGeradorArquivo,
+							"Relatório de contas gerenciadas");
 				} catch (IOException e) {
 					System.out.println("Não foi possível gerar o arquivo");
 				}
 				System.out.println(dadosGeradorArquivo);
-				
+
 				voltar(pessoa, contas);
 			} else if (opcaoPresidente == 2) {
 				System.out.println("\nRelatório de clientes:");
-				
+
 				for (Conta conta : contas) {
 					dadosGeradorArquivo += " - Conta: " + conta.getNumeroConta() + "\n";
 				}
@@ -331,7 +348,7 @@ public class MenuPrincipal {
 					System.out.println("Não foi possível gerar o arquivo");
 				}
 				System.out.println(dadosGeradorArquivo);
-				
+
 				voltar(pessoa, contas);
 			} else if (opcaoPresidente == 3) {
 				System.out.println("\nRelatório com o valor total do capital armazenado no banco:");
@@ -339,7 +356,7 @@ public class MenuPrincipal {
 				for (Conta conta : contas) {
 					saldoTotal += conta.getSaldoTitular();
 				}
-				
+
 				dadosGeradorArquivo = "\nTotal: R$ " + saldoTotal;
 				try {
 					GeradorDeArquivos.escreverArquivoMovimentacao(dadosGeradorArquivo, "Capital armazedo");
