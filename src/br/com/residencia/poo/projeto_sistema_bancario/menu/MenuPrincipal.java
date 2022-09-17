@@ -233,7 +233,7 @@ public class MenuPrincipal {
 				System.out.println("----------------------------------------\n");
 
 				menuCliente(pessoa, conta);
-			} 
+			}
 		}
 
 	}
@@ -364,8 +364,7 @@ public class MenuPrincipal {
 					System.out.println("Não foi possível gerar o arquivo");
 				}
 
-				System.out.println("\n");
-				System.out.println("Total: R$ " + dadosGeradorArquivo);
+				System.out.println(dadosGeradorArquivo);
 				voltar(pessoa, contas);
 			} else {
 				System.out.println("Opção inválida!");
@@ -379,7 +378,7 @@ public class MenuPrincipal {
 
 	public static void voltar(Pessoa pessoa, ArrayList<Conta> contas) {
 		int opcaoVoltar;
-		System.out.println("Digite a opção desejada:/n 1- Menu funcionário /n 2-Deslogar");
+		System.out.println("Digite a opção desejada:\n 1 - Menu funcionário \n 2 - Deslogar");
 		opcaoVoltar = sc.nextInt();
 
 		if (opcaoVoltar == 1) {
