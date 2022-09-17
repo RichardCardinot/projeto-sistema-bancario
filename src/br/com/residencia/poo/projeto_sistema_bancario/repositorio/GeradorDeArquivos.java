@@ -13,4 +13,10 @@ public class GeradorDeArquivos {
 		arquivo.write(movimentacao + "\n");
 		arquivo.close();
 	}
+	
+	public static void escreverArquivoMovimentacao(String movimentacao, String nomeArquivo) throws IOException {
+		FileWriter arquivo = new FileWriter(new File("./temp/" + nomeArquivo + ".txt"), true);
+		arquivo.write(movimentacao + "\n");
+		arquivo.close();
+	}
 }

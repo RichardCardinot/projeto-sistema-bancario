@@ -1,5 +1,6 @@
 package br.com.residencia.poo.projeto_sistema_bancario.menu;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,11 +10,13 @@ import br.com.residencia.poo.projeto_sistema_bancario.contas.Conta;
 import br.com.residencia.poo.projeto_sistema_bancario.contas.ContaPoupanca;
 import br.com.residencia.poo.projeto_sistema_bancario.date.FormataData;
 import br.com.residencia.poo.projeto_sistema_bancario.pessoas.Pessoa;
+import br.com.residencia.poo.projeto_sistema_bancario.repositorio.GeradorDeArquivos;
 import br.com.residencia.poo.projeto_sistema_bancario.repositorio.LeitorDeDados;
 
 public class MenuPrincipal {
 	static Scanner sc = new Scanner(System.in);
 	static DecimalFormat formataDecimais = new DecimalFormat("#,##0.00");
+	static String dadosGeradorArquivo = "";
 
 	public static void selecionarMenu(Pessoa pessoa, Conta conta, ArrayList<Conta> contas) {
 
@@ -22,8 +25,7 @@ public class MenuPrincipal {
 		} else {
 			menuFuncionario(pessoa, contas);
 		}
-		
-		
+
 	}
 
 	public static void apresentar(Pessoa pessoa, Conta conta) {
@@ -204,13 +206,13 @@ public class MenuPrincipal {
 				valorAplicao = sc.nextDouble();
 				System.out.println("Informe a quantidade de dias para simulação:");
 				quantidadeDias = sc.nextInt();
-				
+
 				System.out.println("\n----------------------------------------");
 				System.out.println("Relatório de Rendimento da poupança:");
 				System.out.println("----------------------------------------\n");
-				
+
 				ContaPoupanca contaSimulacao = new ContaPoupanca();
-				
+
 				contaSimulacao.simularRendimento(valorAplicao, quantidadeDias);
 				System.out.println("----------------------------------------\n");
 
@@ -221,63 +223,152 @@ public class MenuPrincipal {
 		}
 
 	}
-	
+
 	public static void menuFuncionario(Pessoa pessoa, ArrayList<Conta> contas) {
 		switch (pessoa.getTipoPessoa()) {
 		case "GERENTE":
-			System.out.println("Relatório de contas gerenciadas:");
-			for (int i = 0; i < contas.size(); i++) {
-				if (Integer.parseInt(pessoa.getAgenciaGerenciada()) == contas.get(i).getAgenciaTitular()) {
-					System.out.println(" - Conta: " + contas.get(i).getNumeroConta());
+			int opcaoGerente;
+			System.out.println("Informe o relatório desejado: ");
+			System.out.println(" 1 - Relatório de contas gerenciadas: ");
+			opcaoGerente = sc.nextInt();
+
+			if (opcaoGerente == 1) {
+				System.out.println("Relatório de contas gerenciadas:");
+				for (int i = 0; i < contas.size(); i++) {
+					if (Integer.parseInt(pessoa.getAgenciaGerenciada()) == contas.get(i).getAgenciaTitular()) {
+						dadosGeradorArquivo += " - Conta: " + contas.get(i).getNumeroConta() + "\n";
+					}
 				}
+				try {
+					GeradorDeArquivos.escreverArquivoMovimentacao(dadosGeradorArquivo, "Relatório de contas gerenciadas");
+				} catch (IOException e) {
+					System.out.println("Não foi possível gerar o arquivo");
+				}
+				System.out.println(dadosGeradorArquivo);
+				
+				voltar(pessoa, contas);
+			} else {
+				System.out.println("Opção inválida!");
+				voltar(pessoa, contas);
 			}
 			break;
-			
+
 		case "DIRETOR":
-			System.out.println("Relatório de contas gerenciadas:");
-			for (int i = 0; i < contas.size(); i++) {
-				if (Integer.parseInt(pessoa.getAgenciaGerenciada()) == contas.get(i).getAgenciaTitular()) {
-					System.out.println(" - Conta: " + contas.get(i).getNumeroConta());
+			int opcaoDiretor;
+			System.out.println("Informe o relatório desejado: ");
+			System.out.println(" 1 - Relatório de contas gerenciadas: ");
+			System.out.println(" 2 - Relatório de clientes: ");
+			opcaoDiretor = sc.nextInt();
+
+			if (opcaoDiretor == 1) {
+				System.out.println("Relatório de contas gerenciadas:");
+				for (int i = 0; i < contas.size(); i++) {
+					if (Integer.parseInt(pessoa.getAgenciaGerenciada()) == contas.get(i).getAgenciaTitular()) {
+						dadosGeradorArquivo += " - Conta: " + contas.get(i).getNumeroConta() + "\n";
+					}
 				}
+				try {
+					GeradorDeArquivos.escreverArquivoMovimentacao(dadosGeradorArquivo, "Relatório de contas gerenciadas");
+				} catch (IOException e) {
+					System.out.println("Não foi possível gerar o arquivo");
+				}
+				System.out.println(dadosGeradorArquivo);
+				
+				voltar(pessoa, contas);
+			} else if (opcaoDiretor == 2) {
+				System.out.println("\nRelatório de clientes:");
+				
+				for (Conta conta : contas) {
+					dadosGeradorArquivo += " - Conta: " + conta.getNumeroConta() + "\n";
+				}
+				try {
+					GeradorDeArquivos.escreverArquivoMovimentacao(dadosGeradorArquivo, "Relatório de clientes");
+				} catch (IOException e) {
+					System.out.println("Não foi possível gerar o arquivo");
+				}
+				System.out.println(dadosGeradorArquivo);
+				
+				voltar(pessoa, contas);
+			} else {
+				System.out.println("Opção inválida!");
+				voltar(pessoa, contas);
 			}
-			
-			System.out.println("\nRelatório de clientes:");
-			for (Conta conta : contas) {
-				System.out.println(" - Conta: " + conta.getNumeroConta());
-			}
-			
-			
+
 			break;
-			
+
 		case "PRESIDENTE":
+			int opcaoPresidente;
 			System.out.println("Informe o relatório desejado: ");
 			System.out.println(" 1 - Relatório de contas gerenciadas: ");
 			System.out.println(" 2 - Relatório de clientes: ");
 			System.out.println(" 3 - Relatório com o valor total do capital armazenado no banco: ");
-			
-			System.out.println("Relatório de contas gerenciadas:");
-			for (int i = 0; i < contas.size(); i++) {
-				if (Integer.parseInt(pessoa.getAgenciaGerenciada()) == contas.get(i).getAgenciaTitular()) {
-					System.out.println(" - Conta: " + contas.get(i).getNumeroConta());
+			opcaoPresidente = sc.nextInt();
+
+			if (opcaoPresidente == 1) {
+				System.out.println("Relatório de contas gerenciadas:");
+				for (int i = 0; i < contas.size(); i++) {
+					if (Integer.parseInt(pessoa.getAgenciaGerenciada()) == contas.get(i).getAgenciaTitular()) {
+						dadosGeradorArquivo += " - Conta: " + contas.get(i).getNumeroConta() + "\n";
+					}
 				}
+				try {
+					GeradorDeArquivos.escreverArquivoMovimentacao(dadosGeradorArquivo, "Relatório de contas gerenciadas");
+				} catch (IOException e) {
+					System.out.println("Não foi possível gerar o arquivo");
+				}
+				System.out.println(dadosGeradorArquivo);
+				
+				voltar(pessoa, contas);
+			} else if (opcaoPresidente == 2) {
+				System.out.println("\nRelatório de clientes:");
+				
+				for (Conta conta : contas) {
+					dadosGeradorArquivo += " - Conta: " + conta.getNumeroConta() + "\n";
+				}
+				try {
+					GeradorDeArquivos.escreverArquivoMovimentacao(dadosGeradorArquivo, "Relatório de clientes");
+				} catch (IOException e) {
+					System.out.println("Não foi possível gerar o arquivo");
+				}
+				System.out.println(dadosGeradorArquivo);
+				
+				voltar(pessoa, contas);
+			} else if (opcaoPresidente == 3) {
+				System.out.println("\nRelatório com o valor total do capital armazenado no banco:");
+				double saldoTotal = 0.0;
+				for (Conta conta : contas) {
+					saldoTotal += conta.getSaldoTitular();
+				}
+				
+				dadosGeradorArquivo = "\nTotal: R$ " + saldoTotal;
+				try {
+					GeradorDeArquivos.escreverArquivoMovimentacao(dadosGeradorArquivo, "Capital armazedo");
+				} catch (IOException e) {
+					System.out.println("Não foi possível gerar o arquivo");
+				}
+
+				System.out.println("\n");
+				System.out.println("Total: R$ " + dadosGeradorArquivo);
+				voltar(pessoa, contas);
+			} else {
+				System.out.println("Opção inválida!");
+				voltar(pessoa, contas);
 			}
-			
-			System.out.println("\nRelatório de clientes:");
-			for (Conta conta : contas) {
-				System.out.println(" - Conta: " + conta.getNumeroConta());
-			}
-			
-			System.out.println("\nRelatório com o valor total do capital armazenado no banco:");
-			double saldoTotal = 0.0;
-			for (Conta conta : contas) {
-				saldoTotal += conta.getSaldoTitular();
-			}
-			
-			System.out.println("\nTotal: R$ " + saldoTotal);
-			
+
 			break;
-			
-			
+
+		}
+	}
+
+	public static void voltar(Pessoa pessoa, ArrayList<Conta> contas) {
+		int opcaoVoltar;
+		System.out.println("Digite a opção desejada:/n 1- Menu funcionário /n 2-Deslogar");
+		opcaoVoltar = sc.nextInt();
+
+		if (opcaoVoltar == 1) {
+			menuFuncionario(pessoa, contas);
+		} else {
+			Login.logar();
 		}
 	}
 
