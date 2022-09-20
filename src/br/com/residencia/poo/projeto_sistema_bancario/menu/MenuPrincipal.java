@@ -58,6 +58,35 @@ public class MenuPrincipal {
 
 	}
 
+	public static void apresentarFuncionario(Pessoa pessoa) {
+		String nome = "", espaco = "";
+		int i = 24 - (pessoa.getNome().length());
+		i /= 2;
+		for (int t = 0; t <= i; t++) {
+			espaco += " ";
+		}
+		nome = espaco + "Bem-vindo, " + pessoa.getNome() + "!" + espaco;
+
+		String espacoDois = "";
+		int d = 36 - (pessoa.getTipoPessoa().length() + 8);
+		for (int t = 0; t <= d; t++) {
+			espacoDois += " ";
+		}
+
+		System.out.println("\n----------------------------------------");
+		System.out.println("---    B A N C O  S E R R A T E C    ---");
+		System.out.println("----------------------------------------");
+		System.out.println("- Cargo: " + pessoa.getTipoPessoa() + espacoDois + " -");
+		System.out.println("----------------------------------------");
+		System.out.println("-                                      -");
+		System.out.println("-" + nome + "-");
+		System.out.println("-                                      -");
+		System.out.println("- v1.0                                 -");
+		System.out.println("----------------------------------------");
+		System.out.println("\nEscolha a opção desejada:");
+
+	}
+
 	public static int opcoesCliente(Pessoa pessoa, Conta conta) { // Se for cliente
 
 		try {
@@ -135,10 +164,10 @@ public class MenuPrincipal {
 				try {
 					System.out.println("\nInforme o valor a ser sacado: ");
 					conta.sacar(sc.nextDouble());
-					menuCliente(pessoa, conta);
+					voltarCliente(pessoa, conta);
 
 				} catch (Exception e) {
-					System.out.println("\nDado inválido!\n");
+					// System.out.println("\nDado inválido!\n");
 					menuCliente(pessoa, conta);
 				}
 
@@ -147,7 +176,7 @@ public class MenuPrincipal {
 				try {
 					System.out.println("\nInforme o valor a ser depositado: ");
 					conta.depositar(sc.nextDouble(), false);
-					menuCliente(pessoa, conta);
+					voltarCliente(pessoa, conta);
 				} catch (Exception e) {
 					System.out.println("\nDado inválido!\n");
 					menuCliente(pessoa, conta);
@@ -164,7 +193,7 @@ public class MenuPrincipal {
 					Conta contaEncontrada = LeitorDeDados.buscaContaPorCpf(sc.next());
 					if (conta != null) {
 						conta.transferir(valor, contaEncontrada);
-						menuCliente(pessoa, conta);
+						voltarCliente(pessoa, conta);
 					}
 					menuCliente(pessoa, conta);
 				} catch (Exception e) {
@@ -196,7 +225,7 @@ public class MenuPrincipal {
 					System.out.println("- Não há dados a serem impressos!");
 				}
 
-				dadosGeradorArquivo += "\nTributações por operação\n- Saque e Depósito: R$ 0.10 e Transferência R$ 0.20.\n";
+				dadosGeradorArquivo += "\nTributações por operação\n- Saque e Depósito, R$ 0.10 e Transferência, R$ 0.20.\n";
 
 				System.out.println(dadosGeradorArquivo);
 				System.out.println("----------------------------------------\n");
@@ -207,7 +236,7 @@ public class MenuPrincipal {
 					System.out.println("Não foi possível gerar o arquivo");
 				}
 
-				menuCliente(pessoa, conta);
+				voltarCliente(pessoa, conta);
 
 			} else { // 2 - Relatório de Rendimento da poupança
 				double valorAplicao = 0.0;
@@ -241,8 +270,8 @@ public class MenuPrincipal {
 	public static void menuFuncionario(Pessoa pessoa, ArrayList<Conta> contas) {
 		switch (pessoa.getTipoPessoa()) {
 		case "GERENTE":
+			apresentarFuncionario(pessoa);
 			int opcaoGerente;
-			System.out.println("Informe o relatório desejado: ");
 			System.out.println(" 1 - Relatório de contas gerenciadas: ");
 			opcaoGerente = sc.nextInt();
 
@@ -269,8 +298,8 @@ public class MenuPrincipal {
 			break;
 
 		case "DIRETOR":
+			apresentarFuncionario(pessoa);
 			int opcaoDiretor;
-			System.out.println("Informe o relatório desejado: ");
 			System.out.println(" 1 - Relatório de contas gerenciadas: ");
 			System.out.println(" 2 - Relatório de clientes: ");
 			opcaoDiretor = sc.nextInt();
@@ -313,15 +342,15 @@ public class MenuPrincipal {
 			break;
 
 		case "PRESIDENTE":
+			apresentarFuncionario(pessoa);
 			int opcaoPresidente;
-			System.out.println("Informe o relatório desejado: ");
-			System.out.println(" 1 - Relatório de contas gerenciadas: ");
-			System.out.println(" 2 - Relatório de clientes: ");
-			System.out.println(" 3 - Relatório com o valor total do capital armazenado no banco: ");
+			System.out.println(" 1 - Relatório de contas gerenciadas ");
+			System.out.println(" 2 - Relatório de clientes ");
+			System.out.println(" 3 - Relatório com o valor total do capital armazenado no banco ");
 			opcaoPresidente = sc.nextInt();
 
 			if (opcaoPresidente == 1) {
-				System.out.println("Relatório de contas gerenciadas:");
+				System.out.println("Relatório de contas gerenciadas");
 				for (int i = 0; i < contas.size(); i++) {
 					if (Integer.parseInt(pessoa.getAgenciaGerenciada()) == contas.get(i).getAgenciaTitular()) {
 						dadosGeradorArquivo += " - Conta: " + contas.get(i).getNumeroConta() + "\n";
@@ -337,7 +366,7 @@ public class MenuPrincipal {
 
 				voltar(pessoa, contas);
 			} else if (opcaoPresidente == 2) {
-				System.out.println("\nRelatório de clientes:");
+				System.out.println("\nRelatório de clientes");
 
 				for (Conta conta : contas) {
 					dadosGeradorArquivo += " - Conta: " + conta.getNumeroConta() + "\n";
@@ -351,20 +380,20 @@ public class MenuPrincipal {
 
 				voltar(pessoa, contas);
 			} else if (opcaoPresidente == 3) {
-				System.out.println("\nRelatório com o valor total do capital armazenado no banco:");
+				System.out.println("\nRelatório com o valor total do capital armazenado no banco");
 				double saldoTotal = 0.0;
 				for (Conta conta : contas) {
 					saldoTotal += conta.getSaldoTitular();
 				}
 
-				dadosGeradorArquivo = "\nTotal: R$ " + saldoTotal;
+				dadosGeradorArquivo = " - Total: R$ " + saldoTotal;
 				try {
 					GeradorDeArquivos.escreverArquivoMovimentacao(dadosGeradorArquivo, "Capital armazedo");
 				} catch (IOException e) {
 					System.out.println("Não foi possível gerar o arquivo");
 				}
 
-				System.out.println(dadosGeradorArquivo);
+				System.out.println(dadosGeradorArquivo + "\n");
 				voltar(pessoa, contas);
 			} else {
 				System.out.println("Opção inválida!");
@@ -383,6 +412,19 @@ public class MenuPrincipal {
 
 		if (opcaoVoltar == 1) {
 			menuFuncionario(pessoa, contas);
+		} else {
+			Login.logar();
+		}
+	}
+
+	public static void voltarCliente(Pessoa pessoa, Conta conta) {
+		int opcaoVoltar;
+		System.out.println("\nDigite a opção desejada:\n 1 - Menu funcionário \n 2 - Deslogar");
+		opcaoVoltar = sc.nextInt();
+
+		if (opcaoVoltar == 1) {
+			menuCliente(pessoa, conta);
+			;
 		} else {
 			Login.logar();
 		}

@@ -22,7 +22,7 @@ public class ContaPoupanca extends Conta {
 		String mensagem = "";
 		if (valorAplicacao > 0 && quantidadeDias > 0) {
 			double valorRendimento = quantidadeDias * RENDIMENTO;
-			double valorRendimentoTotal = valorAplicacao + valorRendimento;
+			double valorRendimentoTotal = valorAplicacao * valorRendimento;
 			
 			Movimentacao movimentacao = new Movimentacao("Simulação de Rendimento", valorRendimentoTotal, RENDIMENTO); 
 			movimentacoes.add(movimentacao);
@@ -34,7 +34,7 @@ public class ContaPoupanca extends Conta {
 			}
 			
 			mensagem = "Para o valor de aplicação R$" + valorAplicacao + ", seu\nrendimento será de R$"
-					+ valorRendimento + ", ficando com o\ntotal de R$" + valorRendimentoTotal;
+					+ valorRendimentoTotal;
 			System.out.println(mensagem);
 			return mensagem;
 		} else {

@@ -35,8 +35,8 @@ public class ContaCorrente extends Conta {
 				System.out.println("O arquivo de movimentações não pode ser gerado!");
 			}
 
-			System.out.println("Seu saque foi realizado com sucesso!");
-			System.out.printf("Você sacou R$%.2f. Seu saldo agora é R$%.2f.", valor, this.getSaldoTitular());
+			System.out.println("\nSeu saque foi realizado com sucesso!");
+			System.out.printf("Você sacou R$%.2f. \n", valor, "\n");
 			return true;
 		} else {
 			System.out.println("Valor inválido!");
@@ -51,15 +51,15 @@ public class ContaCorrente extends Conta {
 
 			if (!operacao) {
 				Movimentacao movimentacao = new Movimentacao("Depósito", valor, TAXA_DEPOSITO);
-				System.out.println("Seu depósito foi realizado com sucesso!");
-				System.out.printf("Você depositou R$%.2f. Seu saldo agora é R$%.2f", valor, this.getSaldoTitular());
+				System.out.println("\nSeu depósito foi realizado com sucesso!");
+				System.out.printf("Você depositou R$%.2f. \n", valor, "\n");
 				movimentacoes.add(movimentacao);
 				try {
 					GeradorDeArquivos.escreverArquivo(movimentacao, "HistoricoConta" + this.getNumeroConta());
 				} catch (IOException e) {
 					System.out.println("O arquivo de movimentações não pode ser gerado!");
 				}
-				
+
 			} else {
 				Movimentacao movimentacao = new Movimentacao("Transferência", valor - TAXA_DEPOSITO, 0.0);
 				movimentacoes.add(movimentacao);
@@ -69,11 +69,6 @@ public class ContaCorrente extends Conta {
 					System.out.println("O arquivo de movimentações não pode ser gerado!");
 				}
 			}
-			
-			
-
-
-
 
 			return true;
 		} else {
@@ -90,9 +85,10 @@ public class ContaCorrente extends Conta {
 		if (saldoTitular >= valor) {
 			this.saldoTitular -= valor;
 
-			conta.depositar((valor - TAXA_TRANSFERENCIA) + TAXA_DEPOSITO, true); 
+			conta.depositar((valor - TAXA_TRANSFERENCIA) + TAXA_DEPOSITO, true);
 
-			Movimentacao movimentacao = new Movimentacao("Transferência", valor - TAXA_TRANSFERENCIA, TAXA_TRANSFERENCIA);
+			Movimentacao movimentacao = new Movimentacao("Transferência", valor - TAXA_TRANSFERENCIA,
+					TAXA_TRANSFERENCIA);
 			movimentacoes.add(movimentacao);
 
 			try {
@@ -102,7 +98,7 @@ public class ContaCorrente extends Conta {
 			}
 
 			System.out.println("\nSua transferência foi realizada com sucesso!");
-			System.out.printf("Você transferiu R$%.2f", valor);
+			System.out.printf("Você transferiu R$%.2f", valor - TAXA_TRANSFERENCIA);
 			System.out.println("\nConta favorecida: " + conta.numeroConta);
 			return true;
 		} else {
